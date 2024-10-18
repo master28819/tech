@@ -1,5 +1,9 @@
 package com.example.tech;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +19,6 @@ public class HomeController {
 
     @GetMapping("/") // Maps to the root URL (http://localhost:8080/)
     public String home(Model model) {
-        // Add any data to the model if needed
         return "home"; // Home page
     }
 
@@ -34,21 +37,33 @@ public class HomeController {
         return "create"; // Create post page
     }
 
-    @GetMapping("/bloggers")
+    @GetMapping("/bloggers") // Maps to /bloggers (http://localhost:8080/bloggers)
     public String showBloggers(Model model) {
         List<Map<String, String>> bloggers = new ArrayList<>();
+        String url = "jdbc:mysql://autorack.proxy.rlwy.net:32899/railway?useSSL=false&serverTimezone=UTC"; // Replace with your database URL
+        String user = "root"; // Replace with your database username
+        String password = "GoKEhkeMQUCnPODkGSEIQgEACmnRTELY"; // Replace with your database password
 
-        // Sample data for bloggers
-        for (int i = 1; i <= 5; i++) {
-            Map<String, String> blogger = new HashMap<>();
-            blogger.put("id", String.valueOf(i));
-            blogger.put("name", "Blogger " + i);
-            blogger.put("bio", "This is bio for Blogger " + i);
-            blogger.put("image", "blogger" + i + ".jpg"); // Example image names
-            bloggers.add(blogger);
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             Statement statement = connection.createStatement()) {
+
+            String query = "SELECT * FROM blogger";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                Map<String, String> blogger = new HashMap<>();
+                blogger.put("id", String.valueOf(resultSet.getInt("id")));
+                blogger.put("name", resultSet.getString("name"));
+                // blogger.put("bio", resultSet.getString("bio"));
+                // blogger.put("image", resultSet.getString("image")); // Ensure your database has the right column
+                bloggers.add(blogger);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        model.addAttribute("bloggers", bloggers);
+        model.addAttribute("bloggers", bloggers); // Add bloggers to the model
         return "bloggers"; // This will render the bloggers.html template
     }
     
@@ -57,7 +72,6 @@ public class HomeController {
         // Here you would handle saving the post to your database
         // For example, you could call a service to save the post
         
-        // Redirect back to the posts management page or another appropriate page
         return "redirect:/admin/posts"; // Change this to your desired redirect URL
     }
 }
