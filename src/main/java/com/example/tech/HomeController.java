@@ -37,33 +37,21 @@ public class HomeController {
         return "create"; // Create post page
     }
 
-    @GetMapping("/bloggers") // Maps to /bloggers (http://localhost:8080/bloggers)
+    @GetMapping("/bloggers")
     public String showBloggers(Model model) {
         List<Map<String, String>> bloggers = new ArrayList<>();
-        String url = "jdbc:mysql://autorack.proxy.rlwy.net:32899/railway?useSSL=false&serverTimezone=UTC"; // Replace with your database URL
-        String user = "root"; // Replace with your database username
-        String password = "GoKEhkeMQUCnPODkGSEIQgEACmnRTELY"; // Replace with your database password
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             Statement statement = connection.createStatement()) {
-
-            String query = "SELECT * FROM blogger";
-            ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                Map<String, String> blogger = new HashMap<>();
-                blogger.put("id", String.valueOf(resultSet.getInt("id")));
-                blogger.put("name", resultSet.getString("name"));
-                // blogger.put("bio", resultSet.getString("bio"));
-                // blogger.put("image", resultSet.getString("image")); // Ensure your database has the right column
-                bloggers.add(blogger);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Sample data for bloggers
+        for (int i = 1; i <= 5; i++) {
+            Map<String, String> blogger = new HashMap<>();
+            blogger.put("id", String.valueOf(i));
+            blogger.put("name", "Blogger " + i);
+            blogger.put("bio", "This is bio for Blogger " + i);
+            blogger.put("image", "blogger" + i + ".jpg"); // Example image names
+            bloggers.add(blogger);
         }
 
-        model.addAttribute("bloggers", bloggers); // Add bloggers to the model
+        model.addAttribute("bloggers", bloggers);
         return "bloggers"; // This will render the bloggers.html template
     }
     
