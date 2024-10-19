@@ -37,23 +37,23 @@ public class HomeController {
         return "create"; // Create post page
     }
 
-    @GetMapping("/bloggers")
-    public String showBloggers(Model model) {
-        List<Map<String, String>> bloggers = new ArrayList<>();
-
-        // Sample data for bloggers
-        for (int i = 1; i <= 5; i++) {
-            Map<String, String> blogger = new HashMap<>();
-            blogger.put("id", String.valueOf(i));
-            blogger.put("name", "Blogger " + i);
-            blogger.put("bio", "This is bio for Blogger " + i);
-            blogger.put("image", "blogger" + i + ".jpg"); // Example image names
-            bloggers.add(blogger);
-        }
-
-        model.addAttribute("bloggers", bloggers);
-        return "bloggers"; // This will render the bloggers.html template
-    }
+//    @GetMapping("/bloggers")
+//    public String showBloggers(Model model) {
+//        List<Map<String, String>> bloggers = new ArrayList<>();
+//
+//        // Sample data for bloggers
+//        for (int i = 1; i <= 5; i++) {
+//            Map<String, String> blogger = new HashMap<>();
+//            blogger.put("id", String.valueOf(i));
+//            blogger.put("name", "Blogger " + i);
+//            blogger.put("bio", "This is bio for Blogger " + i);
+//            blogger.put("image", "blogger" + i + ".jpg"); // Example image names
+//            bloggers.add(blogger);
+//        }
+//
+//        model.addAttribute("bloggers", bloggers);
+//        return "bloggers"; // This will render the bloggers.html template
+//    }
     
     @PostMapping("/create") // Handles form submission for creating a post
     public String savePost(Model model, String title, String body, String topic, boolean publish) {

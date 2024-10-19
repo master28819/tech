@@ -12,16 +12,16 @@
   .bloggers-list {
     padding: 20px;
     text-align: center;
-}
+  }
 
-.blogger-container {
+  .blogger-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-}
+  }
 
-.blogger {
+  .blogger {
     background: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -29,44 +29,44 @@
     width: 200px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
-}
+  }
 
-.blogger:hover {
+  .blogger:hover {
     transform: scale(1.05);
-}
+  }
 
-.blogger-image {
+  .blogger-image {
     width: 100%;
     border-radius: 50%;
     height: auto;
     margin-bottom: 10px;
-}
+  }
 
-.blogger-name {
+  .blogger-name {
     font-size: 1.2em;
     color: #333;
-}
+  }
 
-.blogger-bio {
+  .blogger-bio {
     font-size: 0.9em;
     color: #777;
     margin-bottom: 10px;
-}
+  }
 
-.view-profile {
+  .view-profile {
     display: inline-block;
     padding: 8px 12px;
     background: #007bff;
     color: white;
     border-radius: 5px;
     text-decoration: none;
-}
+  }
 
-.view-profile:hover {
+  .view-profile:hover {
     background: #0056b3;
-}
-
+  }
 </style>
+
 <body>
 
   <header class="clearfix">
@@ -90,7 +90,7 @@
           </a>
           <ul class="dropdown">
             <li><a th:href="@{/admin/posts}">Dashboard</a></li>
-            <li><a href="#" class="logout">logout</a></li>
+            <li><a th:href="#" class="logout">logout</a></li>
           </ul>
         </li>
         <li th:if="${user == null}">
@@ -106,68 +106,77 @@
   <div class="bloggers-list" style="margin-bottom: 300px;">
     <h1>Our Bloggers</h1>
     <div class="blogger-container">
-        <div th:each="blogger : ${bloggers}" class="blogger">
-            <div class="blogger-info">
-                <!-- <img th:src="@{/images/{image}(image=${blogger.image})}" alt="Blogger Image" class="blogger-image" /> -->
-                <h2 class="blogger-name" th:text="${blogger.name}"></h2>
-                <p class="blogger-bio" th:text="${blogger.bio}"></p>
-                <!-- <a th:href="@{/blogger/{id}(id=${blogger.id})}" class="view-profile">View Profile</a> -->
-            </div>
+      <div th:each="blogger : ${bloggers}" class="blogger">
+        <div class="blogger-info">
+          <!-- <img th:src="@{/images/{image}(image=${blogger.image})}" alt="Blogger Image" class="blogger-image" /> -->
+          <h2 class="blogger-name" th:text="${blogger['id']}"></h2>
+          <h2 class="blogger-bio" th:text="${blogger['name']}"></h2>
+          <!-- <a th:href="@{/blogger/{id}(id=${blogger.id})}" class="view-profile">View Profile</a> -->
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
-<!-- FOOTER -->
-<div class="footer">
-  <div class="footer-content">
-    <div class="footer-section about">
-      <h1 class="logo-text">Tech2<span>xplore</span></h1>
-      <p>
-        Tech2xplore is a Blog Type Web Side.
-      </p>
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-content">
+      <div class="footer-section about">
+        <h1 class="logo-text">Tech2<span>xplore</span></h1>
+        <p>
+          Tech2xplore is a Blog Type Web Side.
+        </p>
 
-      <div class="contact">
-        <i class="fa fa-phone"> &nbsp; 9328480107</i>
+        <div class="contact">
+          <i class="fa fa-phone"> &nbsp; 9328480107</i>
+        </div>
+
+        <div class="social">
+          <a href="#"><i class="fa fa-facebook"></i></a>
+          <a href="#"><i class="fa fa-twitter"></i></a>
+        </div>
+
       </div>
 
-      <div class="social">
-        <a href="#"><i class="fa fa-facebook"></i></a>
-        <a href="#"><i class="fa fa-twitter"></i></a>
-        </div>
+      <div class="footer-section quick-links">
+        <h2>QUICK LINKS</h2>
+        <ul>
+          <a href="#">
+            <li>Events</li>
+          </a>
+          <a href="#">
+            <li>Contact</li>
+          </a>
+          <a href="#">
+            <li>Write for us</li>
+          </a>
+          <a href="#">
+            <li>Terms and conditions</li>
+          </a>
+        </ul>
+      </div>
 
-    </div>
+      <div class="footer-section contact-form-div">
+        <h2>Contact Us</h2>
+        <form th:action="@{/contact}" method="post">
+          <input type="text" name="email-address" class="text-input contact-input" placeholder="Your email address">
+          <textarea name="message" cols="30" rows="3" class="text-input contact-input"
+            placeholder="Message..."></textarea>
+          <button type="submit" name="send-msg-btn" class="send-msg-btn">
+            <i class="fa fa-send"></i> Send
+          </button>
+        </form>
+      </div>
 
-    <div class="footer-section quick-links">
-      <h2>QUICK LINKS</h2>
-      <ul>
-        <a href="#"><li>Events</li></a>
-        <a href="#"><li>Contact</li></a>
-        <a href="#"><li>Write for us</li></a>
-        <a href="#"><li>Terms and conditions</li></a>
-      </ul>
-    </div>
-
-    <div class="footer-section contact-form-div">
-      <h2>Contact Us</h2>
-      <form th:action="@{/contact}" method="post">
-        <input type="text" name="email-address" class="text-input contact-input" placeholder="Your email address">
-        <textarea name="message" cols="30" rows="3" class="text-input contact-input" placeholder="Message..."></textarea>
-        <button type="submit" name="send-msg-btn" class="send-msg-btn">
-          <i class="fa fa-send"></i> Send
-        </button>
-      </form>
     </div>
 
   </div>
+  <!-- // FOOTER -->
 
-    </div>
-<!-- // FOOTER -->
+  <!-- JQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- JQuery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<!-- Custom Script -->
-<script th:src="@{/js/scripts.js}"></script>
+  <!-- Custom Script -->
+  <script th:src="@{/js/scripts.js}"></script>
 
 </body>
 
