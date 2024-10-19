@@ -60,6 +60,6 @@ public class HomeController {
         // Here you would handle saving the post to your database
         // For example, you could call a service to save the post
         
-        return "redirect:/admin/posts"; // Change this to your desired redirect URL
+        return "redirect:/admin/posts"; 
     }
 }
