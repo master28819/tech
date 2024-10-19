@@ -21,6 +21,6 @@ public class BloggerController {
         List<Map<String, Object>> bloggers = jdbcTemplate.queryForList(sql);
 
         model.addAttribute("bloggers", bloggers);
-        return "blogger";
+        return "bloggers";
     }
 }
